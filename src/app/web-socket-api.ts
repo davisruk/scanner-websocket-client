@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 
 export class WebSocketAPI {
   webSocketEndPoint = 'http://localhost:8080/ws';
+  // webSocketEndPoint = 'http://192.168.1.71:8080/ws';
   topic = '/topic/greetings';
   stompClient: any;
   appComponent: AppComponent;
@@ -42,8 +43,16 @@ export class WebSocketAPI {
     }, 5000);
   }
 
+  _sendReconnect() {
+    this.stompClient.send('/app/reconnectScanner', {});
+  }
+
+  _sendStatusQuery() {
+    this.stompClient.send('/app/scannerStatus', {});
+  }
+
   onMessageReceived(message) {
-    console.log('Message Recieved from Server :: ' + message);
+    console.log('Message Recieved from Server : ' + message);
     this.appComponent.handleMessage(message.body);
   }
 }
