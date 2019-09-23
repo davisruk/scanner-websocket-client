@@ -7,10 +7,6 @@ import { WebSocketAPI } from './web-socket-api';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-  constructor() {
-    console.log('new instance');
-  }
-
   title = 'Scanner WebSocket Client';
 
   webSocketAPI: WebSocketAPI;
@@ -19,23 +15,29 @@ export class AppComponent implements OnInit {
   name: string;
   connected: boolean;
   reConnectScannerDisabled: boolean;
+  socketStatus: string;
+
   ngOnInit() {
-    console.log('initialisation');
     this.reConnectScannerDisabled = true;
-    this.webSocketAPI = new WebSocketAPI(this);
+    this.webSocketAPI = new WebSocketAPI();
+    this.socketStatus = 'Disconnected';
   }
 
   connect() {
-    this.webSocketAPI._connect();
-    setTimeout(() => {
+    this.webSocketAPI._connect().subscribe((connectResult: string) => {
       this.connected = true;
+      this.handleMessage(connectResult);
+      this.webSocketAPI
+        ._subscribe()
+        .subscribe((message: string) => this.handleMessage(message));
       this.scannerStatus();
-    }, 1000);
+    });
   }
 
   disconnect() {
     this.webSocketAPI._disconnect();
     this.connected = false;
+    this.socketStatus = 'Disconnected';
   }
 
   reconnectScanner() {
@@ -58,6 +60,8 @@ export class AppComponent implements OnInit {
       } else if (message.search(':Closed') !== -1) {
         this.reConnectScannerDisabled = false;
       }
+    } else if (message.startsWith('[SOCK]')) {
+      this.socketStatus = message;
     } else {
       this.dataMessage = message;
     }
