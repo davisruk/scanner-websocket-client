@@ -47,12 +47,7 @@ export class AppComponent implements OnInit {
   }
 
   handleMessage(message: string) {
-    if (
-      message.startsWith('COM') ||
-      message.startsWith('Port') ||
-      message.startsWith('Connection Attempt') ||
-      message.startsWith('[STATUS]')
-    ) {
+    if (message.startsWith('[STATUS]')) {
       this.scannerStatusMessage = message;
       if (message.search('opened') !== -1) {
         this.reConnectScannerDisabled = true;
