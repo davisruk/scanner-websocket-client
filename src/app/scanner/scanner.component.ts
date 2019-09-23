@@ -19,6 +19,7 @@ export class ScannerComponent implements OnInit {
     this.reConnectScannerDisabled = true;
     this.webSocketAPI = new WebSocketAPI();
     this.socketStatus = 'Disconnected';
+    this.scannerStatusMessage = 'Unavailable - socket closed';
   }
 
   connect() {
@@ -35,7 +36,9 @@ export class ScannerComponent implements OnInit {
   disconnect() {
     this.webSocketAPI._disconnect();
     this.connected = false;
+    this.reConnectScannerDisabled = true;
     this.socketStatus = 'Disconnected';
+    this.scannerStatusMessage = 'Unavailable - socket closed';
   }
 
   reconnectScanner() {
