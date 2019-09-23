@@ -62,6 +62,9 @@ export class ScannerComponent implements OnInit {
         this.reConnectScannerDisabled = false;
       }
     } else if (message.startsWith('[SOCK]')) {
+      if (message.search('Error')) {
+        this.connected = false;
+      }
       this.socketStatus = message;
     } else {
       this.dataMessage = message;
