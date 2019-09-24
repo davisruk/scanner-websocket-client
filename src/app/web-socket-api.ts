@@ -1,6 +1,6 @@
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, of } from 'rxjs';
 
 export class WebSocketAPI {
   webSocketEndPoint = 'http://localhost:8080/ws';
@@ -27,11 +27,11 @@ export class WebSocketAPI {
     return messageResult.asObservable();
   }
 
-  _disconnect() {
+  _disconnect(): Observable<string> {
     if (this.stompClient !== null) {
       this.stompClient.disconnect();
     }
-    console.log('Disconnected');
+    return of('[SOCK] Disconnected');
   }
 
   _sendReconnect() {
