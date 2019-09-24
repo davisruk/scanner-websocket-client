@@ -128,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "scanner-websocker-client"
+  "defaultProject": "scanner-websocker-client",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
