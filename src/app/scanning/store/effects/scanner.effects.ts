@@ -1,24 +1,38 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
-import { concatMap } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
-import { ScannerActionTypes, ScannerActions } from '../actions/scanner.actions';
-
-
+import { concatMap, map, switchMap } from 'rxjs/operators';
+import * as fromScannerActions from '../actions/scanner.actions';
+import { ScannerWebSocketService } from '../../services/scanner-web-socket/scanner-web-socket.service';
+import { Observable, of, EMPTY } from 'rxjs';
 
 @Injectable()
 export class ScannerEffects {
-
+  constructor(
+    private actions$: Actions<fromScannerActions.ScannerActions>,
+    private scannerService: ScannerWebSocketService
+  ) {}
 
   @Effect()
-  loadScanners$ = this.actions$.pipe(
-    ofType(ScannerActionTypes.LoadScanners),
-    /** An EMPTY observable only emits completion. Replace with your own observable API request */
-    concatMap(() => EMPTY)
+  connectSocket$ = this.actions$.pipe(
+    ofType(fromScannerActions.ScannerActionTypes.ConnectSocket),
+    switchMap(() => this.scannerService._connectSocket()),
+    switchMap(result => {
+      return of(
+        new fromScannerActions.ConnectSocketSuccess({
+          connected: true,
+          message: result
+        })
+      );
+    })
   );
 
-
-  constructor(private actions$: Actions<ScannerActions>) {}
-
+  @Effect()
+  startListener$ = this.actions$.pipe(
+    ofType(fromScannerActions.ScannerActionTypes.StartScannerEventListener),
+    switchMap(() => {
+      this.scannerService._listenForScanningEvents();
+      return EMPTY;
+    })
+  );
 }

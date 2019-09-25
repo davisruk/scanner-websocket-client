@@ -1,1 +1,4 @@
+<div *ngIf="(socketState$ | async)?.socketStatusMessage">
+  {{ (socketState$ | async).socketStatusMessage }}
+</div>
 <p>scanner-page works!</p>
