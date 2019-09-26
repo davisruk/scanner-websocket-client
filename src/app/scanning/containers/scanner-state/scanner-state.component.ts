@@ -8,6 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class ScannerStateComponent implements OnInit {
   @Input() scannerState: ScannerState;
+  @Input() socketConnected: boolean;
   @Output() connectScanner = new EventEmitter();
 
   constructor() {}

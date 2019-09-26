@@ -1,3 +1,4 @@
+import { DisconnectSocket } from './../actions/scanner.actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
@@ -51,6 +52,20 @@ export class ScannerEffects {
     switchMap(() => {
       this.scannerService._sendReconnectScanner();
       return EMPTY;
+    })
+  );
+
+  @Effect()
+  scannerDisconnect$ = this.actions$.pipe(
+    ofType(fromScannerActions.ScannerActionTypes.DisconnectSocket),
+    switchMap(() => this.scannerService._disconnectSocket()),
+    switchMap(result => {
+      return of(
+        new fromScannerActions.ConnectSocketSuccess({
+          connected: false,
+          message: result
+        })
+      );
     })
   );
 }

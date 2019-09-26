@@ -50,6 +50,15 @@ export const selectScannerState = createSelector(
 export function reducer(state = initialState, action: ScannerActions): State {
   switch (action.type) {
     case ScannerActionTypes.ConnectSocketSuccess: {
+      if (!action.payload.connected) {
+        return {
+          scanner: initialScannerState,
+          socket: {
+            socketConnected: action.payload.connected,
+            socketStatusMessage: action.payload.message
+          }
+        };
+      }
       return {
         ...state,
         socket: {

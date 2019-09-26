@@ -1,9 +1,9 @@
+import { DisconnectSocket } from './../../store/actions/scanner.actions';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromScanner from '../../store/reducers/scanner.reducer';
 import { map } from 'rxjs/operators';
 import {
-  ScannerActionTypes,
   ConnectSocket,
   ScannerStatusQuery,
   StartScannerEventListener,
@@ -40,6 +40,10 @@ export class ScannerPageComponent implements OnInit {
   ngOnInit() {
     this.socketState$ = this.store.select(fromScanner.selectSocketState);
     this.scannerState$ = this.store.select(fromScanner.selectScannerState);
+    this.connectSocket();
+  }
+
+  connectSocket() {
     this.store.dispatch(new ConnectSocket());
 
     this.socketState$
@@ -56,7 +60,17 @@ export class ScannerPageComponent implements OnInit {
       .subscribe();
   }
 
+  disconnectSocket() {
+    this.store.dispatch(new DisconnectSocket());
+  }
+
   onConnectScanner() {
     this.store.dispatch(new ReconnectScanner());
+  }
+
+  handleToggleSocketState(socketState: fromScanner.SocketState) {
+    socketState.socketConnected
+      ? this.disconnectSocket()
+      : this.connectSocket();
   }
 }

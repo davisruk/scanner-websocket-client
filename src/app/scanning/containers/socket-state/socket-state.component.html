@@ -18,7 +18,9 @@
   </mat-card-header>
   <mat-card-content class="dashboard-card-content">
     <div>
-      {{ socketState.socketConnected }}
+      <button mat-button-raised (click)="handleToggleSocket(socketState)">
+        Toggle Socket
+      </button>
     </div>
     <div>
       {{ socketState.socketStatusMessage }}

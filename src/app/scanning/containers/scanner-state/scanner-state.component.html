@@ -19,7 +19,9 @@
   <mat-card-content class="dashboard-card-content">
     <div>
       <button
-        [disabled]="scannerState.connected"
+        mat-button-raised
+        color="primary"
+        [disabled]="scannerState.connected || !socketConnected"
         (click)="handleConnectScanner()"
       >
         Connect Scanner
