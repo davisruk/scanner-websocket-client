@@ -1,11 +1,9 @@
-import { DisconnectSocket } from './../actions/scanner.actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-
-import { concatMap, map, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import * as fromScannerActions from '../actions/scanner.actions';
 import { ScannerWebSocketService } from '../../services/scanner-web-socket/scanner-web-socket.service';
-import { Observable, of, EMPTY } from 'rxjs';
+import { of, EMPTY } from 'rxjs';
 
 @Injectable()
 export class ScannerEffects {
