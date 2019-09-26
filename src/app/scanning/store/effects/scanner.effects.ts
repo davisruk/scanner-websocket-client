@@ -44,4 +44,13 @@ export class ScannerEffects {
       return EMPTY;
     })
   );
+
+  @Effect()
+  scannerReConnect$ = this.actions$.pipe(
+    ofType(fromScannerActions.ScannerActionTypes.ReconnectScanner),
+    switchMap(() => {
+      this.scannerService._sendReconnectScanner();
+      return EMPTY;
+    })
+  );
 }

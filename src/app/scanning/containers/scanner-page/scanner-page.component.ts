@@ -6,7 +6,8 @@ import {
   ScannerActionTypes,
   ConnectSocket,
   ScannerStatusQuery,
-  StartScannerEventListener
+  StartScannerEventListener,
+  ReconnectScanner
 } from '../../store/actions/scanner.actions';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -53,5 +54,9 @@ export class ScannerPageComponent implements OnInit {
         takeUntil(this.connectInitEnded$)
       )
       .subscribe();
+  }
+
+  onConnectScanner() {
+    this.store.dispatch(new ReconnectScanner());
   }
 }
