@@ -25,15 +25,15 @@ export class ConnectSocketResultPayload {
 }
 
 export class ReconnectScanner implements Action {
-  readonly type = ScannerActionTypes.ConnectSocket;
+  readonly type = ScannerActionTypes.ReconnectScanner;
 }
 
 export class DisconnectSocket implements Action {
-  readonly type = ScannerActionTypes.ConnectSocket;
+  readonly type = ScannerActionTypes.DisconnectSocket;
 }
 
 export class ScannerStatusQuery implements Action {
-  readonly type = ScannerActionTypes.ConnectSocket;
+  readonly type = ScannerActionTypes.ScannerStatusQuery;
 }
 
 export class StartScannerEventListener implements Action {

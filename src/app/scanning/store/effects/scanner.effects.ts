@@ -35,4 +35,13 @@ export class ScannerEffects {
       return EMPTY;
     })
   );
+
+  @Effect()
+  scannerStatusQuery$ = this.actions$.pipe(
+    ofType(fromScannerActions.ScannerActionTypes.ScannerStatusQuery),
+    switchMap(() => {
+      this.scannerService._sendScannerStatusQuery();
+      return EMPTY;
+    })
+  );
 }

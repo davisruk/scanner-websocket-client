@@ -11,6 +11,7 @@ import {
 } from '../../store/actions/scanner.actions';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
 @Component({
   selector: 'app-scanner-page',
   templateUrl: './scanner-page.component.html',
@@ -33,6 +34,7 @@ export class ScannerPageComponent implements OnInit {
           if (socketState.socketConnected) {
             this.store.dispatch(new StartScannerEventListener());
             this.connectInitEnded$.next(true);
+            this.store.dispatch(new ScannerStatusQuery());
           }
         }),
         takeUntil(this.connectInitEnded$)

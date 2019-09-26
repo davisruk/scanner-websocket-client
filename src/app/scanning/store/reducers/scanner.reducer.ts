@@ -92,16 +92,16 @@ function handleScannerMessage(
 ): ScannerState {
   let isConnected =
     message.search('opened') !== -1 || message.search(':Open') !== -1;
-  if (isConnected !== currentState.connected) {
+  if (isConnected && !currentState.connected) {
     return { ...currentState, statusMessage: message, connected: isConnected };
   }
   isConnected =
     message.search('no available ports found') !== -1 ||
     message.search(':Closed') !== -1;
-  if (isConnected !== currentState.connected) {
+  if (!isConnected && currentState.connected) {
     return { ...currentState, statusMessage: message, connected: isConnected };
   }
-  return currentState;
+  return { ...currentState, statusMessage: message };
 }
 
 function handleSocketMessage(
@@ -111,5 +111,5 @@ function handleSocketMessage(
   if (message.search('Error')) {
     return { socketConnected: false, socketStatusMessage: message };
   }
-  return currentState;
+  return { ...currentState, socketStatusMessage: message };
 }
