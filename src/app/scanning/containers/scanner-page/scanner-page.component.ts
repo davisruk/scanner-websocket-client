@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromScanner from '../../store/reducers/scanner.reducer';
-import { iif } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {
   ScannerActionTypes,
   ConnectSocket,
@@ -11,6 +10,7 @@ import {
 } from '../../store/actions/scanner.actions';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-scanner-page',
@@ -18,10 +18,23 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./scanner-page.component.sass']
 })
 export class ScannerPageComponent implements OnInit {
-  constructor(private store: Store<fromScanner.State>) {}
+  constructor(
+    private store: Store<fromScanner.State>,
+    private breakpointObserver: BreakpointObserver
+  ) {}
+
   socketState$: Observable<fromScanner.SocketState>;
   scannerState$: Observable<fromScanner.ScannerState>;
   connectInitEnded$: Subject<boolean> = new Subject<boolean>();
+
+  spans = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map(({ matches }) => {
+      if (matches) {
+        return { cols: 1, rows: 2 };
+      }
+      return { cols: 2, rows: 1 };
+    })
+  );
 
   ngOnInit() {
     this.socketState$ = this.store.select(fromScanner.selectSocketState);

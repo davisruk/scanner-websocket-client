@@ -1,7 +1,13 @@
-<div *ngIf="(socketState$ | async)?.socketStatusMessage">
-  {{ (socketState$ | async).socketStatusMessage }}
+<div class="grid-container">
+  <h1 class="mat-h1">Dashboard</h1>
+  <mat-grid-list cols="{{ (spans | async).cols }}" rowHeight="350px">
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <app-socket-state [socketState]="socketState$ | async"></app-socket-state>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="(spans | async).rows">
+      <app-scanner-state
+        [scannerState]="scannerState$ | async"
+      ></app-scanner-state>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
-<div *ngIf="(scannerState$ | async)?.statusMessage">
-  {{ (scannerState$ | async).statusMessage }}
-</div>
-<p>scanner-page works!</p>
