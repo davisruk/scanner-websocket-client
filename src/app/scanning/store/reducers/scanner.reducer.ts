@@ -14,12 +14,14 @@ const initialSocketState: SocketState = {
 };
 
 export interface ScannerState {
+  attemptingConnection: boolean;
   connected: boolean;
   statusMessage: string;
   dataMessage: string;
 }
 
 const initialScannerState: ScannerState = {
+  attemptingConnection: false,
   connected: false,
   statusMessage: '[SCANNER] Status Unknown',
   dataMessage: ''
