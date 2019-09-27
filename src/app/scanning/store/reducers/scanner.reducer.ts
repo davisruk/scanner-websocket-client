@@ -1,3 +1,4 @@
+import { ScannerState } from './scanner.reducer';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ScannerActions, ScannerActionTypes } from '../actions/scanner.actions';
 
@@ -70,57 +71,13 @@ export function reducer(state = initialState, action: ScannerActions): State {
       };
     }
     case ScannerActionTypes.ScannerEventListenerNotification: {
-      return handleMessage(state, action.payload.message);
+      return {
+        ...state,
+        scanner: action.payload.status
+      };
     }
 
     default:
       return state;
   }
-}
-
-function handleMessage(currentState: State, message: string): State {
-  if (message.startsWith('[STATUS]')) {
-    return {
-      ...currentState,
-      scanner: handleScannerMessage(currentState.scanner, message)
-    };
-  } else if (message.startsWith('[SOCK]')) {
-    return {
-      ...currentState,
-      socket: handleSocketMessage(currentState.socket, message)
-    };
-  } else {
-    return {
-      ...currentState,
-      scanner: { ...currentState.scanner, dataMessage: message }
-    };
-  }
-}
-
-function handleScannerMessage(
-  currentState: ScannerState,
-  message: string
-): ScannerState {
-  let isConnected =
-    message.search('opened') !== -1 || message.search(':Open') !== -1;
-  if (isConnected && !currentState.connected) {
-    return { ...currentState, statusMessage: message, connected: isConnected };
-  }
-  isConnected =
-    message.search('no available ports found') !== -1 ||
-    message.search(':Closed') !== -1;
-  if (!isConnected && currentState.connected) {
-    return { ...currentState, statusMessage: message, connected: isConnected };
-  }
-  return { ...currentState, statusMessage: message };
-}
-
-function handleSocketMessage(
-  currentState: SocketState,
-  message: string
-): SocketState {
-  if (message.search('Error')) {
-    return { socketConnected: false, socketStatusMessage: message };
-  }
-  return { ...currentState, socketStatusMessage: message };
 }

@@ -21,7 +21,11 @@
       <button
         mat-button-raised
         color="primary"
-        [disabled]="scannerState.connected || !socketConnected"
+        [disabled]="
+          scannerState.connected ||
+          !socketConnected ||
+          scannerState.attemptingConnection
+        "
         (click)="handleConnectScanner()"
       >
         Connect Scanner

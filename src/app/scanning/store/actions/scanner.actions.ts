@@ -1,3 +1,4 @@
+import { ScannerState } from './../reducers/scanner.reducer';
 import { Action } from '@ngrx/store';
 
 export enum ScannerActionTypes {
@@ -41,7 +42,7 @@ export class StartScannerEventListener implements Action {
 }
 
 export class ScannerEventListenerNotificationPayload {
-  message: string;
+  status: ScannerState;
 }
 
 export class ScannerEventListenerNotification implements Action {
