@@ -2,24 +2,21 @@
   <mat-card-header>
     <mat-card-title>
       Scanner State
-      <button
-        mat-icon-button
-        class="more-button"
-        [matMenuTriggerFor]="menu"
-        aria-label="Toggle menu"
+      <mat-icon
+        [ngClass]="{
+          'more-button': true,
+          'green-icon': scannerState.connected,
+          'red-icon': !scannerState.connected,
+          'amber-icon': scannerState.attemptingConnection
+        }"
+        >lens</mat-icon
       >
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu" xPosition="before">
-        <button mat-menu-item>Expand</button>
-        <button mat-menu-item>Remove</button>
-      </mat-menu>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content class="dashboard-card-content">
     <div>
       <button
-        mat-button-raised
+        mat-raised-button
         color="primary"
         [disabled]="
           scannerState.connected ||
