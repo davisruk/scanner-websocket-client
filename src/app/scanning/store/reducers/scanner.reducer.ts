@@ -49,6 +49,10 @@ export const selectScannerState = createSelector(
   selectScanningState,
   state => state.scanner
 );
+export const selectScannerStatusMessage = createSelector(
+  selectScannerState,
+  state => state.statusMessage
+);
 
 export function reducer(state = initialState, action: ScannerActions): State {
   switch (action.type) {

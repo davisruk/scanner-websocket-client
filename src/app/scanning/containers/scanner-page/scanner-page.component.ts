@@ -1,3 +1,9 @@
+/*********************************/
+/* Scanner Page Smart Component  */
+/* Handles all store interaction */
+/*********************************/
+
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DisconnectSocket } from './../../store/actions/scanner.actions';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -21,13 +27,14 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 export class ScannerPageComponent implements OnInit {
   constructor(
     private store: Store<fromScanner.State>,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private snackBar: MatSnackBar
   ) {}
 
   socketState$: Observable<fromScanner.SocketState>;
   scannerState$: Observable<fromScanner.ScannerState>;
   connectInitEnded$: Subject<boolean> = new Subject<boolean>();
-
+  scannerStatusMessage$: Observable<string>;
   spans = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(({ matches }) => {
       if (matches) {
@@ -40,12 +47,19 @@ export class ScannerPageComponent implements OnInit {
   ngOnInit() {
     this.socketState$ = this.store.select(fromScanner.selectSocketState);
     this.scannerState$ = this.store.select(fromScanner.selectScannerState);
+    this.scannerStatusMessage$ = this.store.select(
+      fromScanner.selectScannerStatusMessage
+    );
     this.connectSocket();
+    this.scannerStatusMessage$.subscribe(message =>
+      this.openSnackBar(message, '')
+    );
   }
+
+  ngOnDestroy(): void {}
 
   connectSocket() {
     this.store.dispatch(new ConnectSocket());
-
     this.socketState$
       .pipe(
         map(socketState => {
@@ -72,5 +86,14 @@ export class ScannerPageComponent implements OnInit {
     socketState.socketConnected
       ? this.disconnectSocket()
       : this.connectSocket();
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+      panelClass: ['snackbar-background'],
+      verticalPosition: 'bottom',
+      horizontalPosition: 'right'
+    });
   }
 }
