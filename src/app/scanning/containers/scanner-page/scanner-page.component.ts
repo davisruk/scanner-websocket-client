@@ -18,6 +18,8 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   selector: 'app-scanner-page',
@@ -28,8 +30,20 @@ export class ScannerPageComponent implements OnInit {
   constructor(
     private store: Store<fromScanner.State>,
     private breakpointObserver: BreakpointObserver,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
+  ) {
+    iconRegistry.addSvgIcon(
+      'barcode-scan',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/barcode-scan.svg')
+    );
+
+    iconRegistry.addSvgIcon(
+      'socket',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/power-socket-uk.svg')
+    );
+  }
 
   socketState$: Observable<fromScanner.SocketState>;
   scannerState$: Observable<fromScanner.ScannerState>;

@@ -15,11 +15,13 @@
   <mat-card-content class="dashboard-card-content">
     <div>
       <button
-        mat-raised-button
+        mat-mini-fab
         (click)="handleToggleSocket(socketState)"
         color="primary"
+        matTooltip="Toggle Web Socket Connection"
+        matTooltipPosition="above"
       >
-        Toggle Socket
+        <mat-icon svgIcon="socket" aria-hidden="false"></mat-icon>
       </button>
     </div>
     <div>

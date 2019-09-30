@@ -16,7 +16,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     ScannerPageComponent,
@@ -34,7 +35,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatCardModule,
     MatMenuModule,
     MatSnackBarModule,
+    MatTooltipModule,
     CommonModule,
+    HttpClientModule,
     StoreModule.forFeature(fromScanner.scannerFeatureKey, fromScanner.reducer),
     EffectsModule.forFeature([ScannerEffects])
   ]

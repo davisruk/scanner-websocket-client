@@ -16,7 +16,7 @@
   <mat-card-content class="dashboard-card-content">
     <div>
       <button
-        mat-raised-button
+        mat-mini-fab
         color="primary"
         [disabled]="
           scannerState.connected ||
@@ -24,12 +24,11 @@
           scannerState.attemptingConnection
         "
         (click)="handleConnectScanner()"
+        matTooltip="Connect Scanner"
+        matTooltipPosition="above"
       >
-        Connect Scanner
+        <mat-icon svgIcon="barcode-scan" aria-hidden="false"></mat-icon>
       </button>
-    </div>
-    <div>
-      {{ scannerState.statusMessage }}
     </div>
     <div>
       {{ scannerState.dataMessage }}
