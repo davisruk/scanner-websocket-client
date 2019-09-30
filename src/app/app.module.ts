@@ -21,7 +21,7 @@ import { AppEffects } from './app.effects';
 import { ScanningModule } from './scanning/scanning.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   declarations: [AppComponent, MainNavComponent],
   imports: [
@@ -38,6 +38,7 @@ import { environment } from '../environments/environment';
     MatCardModule,
     MatMenuModule,
     ScanningModule,
+    FlexLayoutModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {
@@ -46,7 +47,10 @@ import { environment } from '../environments/environment';
       }
     }),
     EffectsModule.forRoot([AppEffects]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

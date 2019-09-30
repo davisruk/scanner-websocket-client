@@ -1,18 +1,28 @@
-<div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
-  <mat-grid-list cols="{{ (spans | async).cols }}" rowHeight="350px">
-    <mat-grid-tile [colspan]="1" [rowspan]="1">
+<mat-card fxFlex="30%" class="dashboard-card" [class.mat-elevation-z8]="true">
+  <mat-card-header>
+    <mat-card-title>
+      Scanner Data
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content fxLayout="column" class="dashboard-card-content">
+    <textarea disabled class="scan-data-area" matInput>{{
+      (scannerState$ | async).dataMessage
+    }}</textarea>
+  </mat-card-content>
+  <mat-card-footer>
+    <mat-card-actions align="start">
       <app-socket-state
+        class="footer-left-align"
         [socketState]="socketState$ | async"
         (toggleState)="handleToggleSocketState($event)"
       ></app-socket-state>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="(spans | async).rows">
+      <div fxFlex></div>
       <app-scanner-state
+        class="footer-right-align"
         [scannerState]="scannerState$ | async"
         [socketConnected]="(socketState$ | async).socketConnected"
         (connectScanner)="onConnectScanner()"
       ></app-scanner-state>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
+    </mat-card-actions>
+  </mat-card-footer>
+</mat-card>

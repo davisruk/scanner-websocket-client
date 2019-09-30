@@ -1,37 +1,22 @@
-<mat-card class="dashboard-card">
-  <mat-card-header>
-    <mat-card-title>
-      Scanner State
-      <mat-icon
-        [ngClass]="{
-          'more-button': true,
-          'green-icon': scannerState.connected,
-          'red-icon': !scannerState.connected,
-          'amber-icon': scannerState.attemptingConnection
-        }"
-        >lens</mat-icon
-      >
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="dashboard-card-content">
-    <div>
-      <button
-        mat-mini-fab
-        color="primary"
-        [disabled]="
-          scannerState.connected ||
-          !socketConnected ||
-          scannerState.attemptingConnection
-        "
-        (click)="handleConnectScanner()"
-        matTooltip="Connect Scanner"
-        matTooltipPosition="above"
-      >
-        <mat-icon svgIcon="barcode-scan" aria-hidden="false"></mat-icon>
-      </button>
-    </div>
-    <div>
-      {{ scannerState.dataMessage }}
-    </div>
-  </mat-card-content>
-</mat-card>
+<mat-icon
+  [ngClass]="{
+    'more-button': true,
+    'green-icon': scannerState.connected,
+    'red-icon': !scannerState.connected,
+    'amber-icon': scannerState.attemptingConnection
+  }"
+  >lens</mat-icon
+>
+<button
+  mat-raised-button
+  color="primary"
+  [disabled]="
+    scannerState.connected ||
+    !socketConnected ||
+    scannerState.attemptingConnection
+  "
+  (click)="handleConnectScanner()"
+  matTooltip="Connect Scanner"
+>
+  <mat-icon svgIcon="barcode-scan" aria-hidden="false"></mat-icon>
+</button>

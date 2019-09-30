@@ -1,31 +1,18 @@
-<mat-card class="dashboard-card">
-  <mat-card-header>
-    <mat-card-title>
-      Socket State
-      <mat-icon
-        [ngClass]="{
-          'more-button': true,
-          'green-icon': socketState.socketConnected,
-          'red-icon': !socketState.socketConnected
-        }"
-        >lens</mat-icon
-      >
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="dashboard-card-content">
-    <div>
-      <button
-        mat-mini-fab
-        (click)="handleToggleSocket(socketState)"
-        color="primary"
-        matTooltip="Toggle Web Socket Connection"
-        matTooltipPosition="above"
-      >
-        <mat-icon svgIcon="socket" aria-hidden="false"></mat-icon>
-      </button>
-    </div>
-    <div>
-      {{ socketState.socketStatusMessage }}
-    </div>
-  </mat-card-content>
-</mat-card>
+<button
+  style="margin-right:8px"
+  mat-raised-button
+  (click)="handleToggleSocket(socketState)"
+  color="primary"
+  matTooltip="Toggle Web Socket Connection"
+>
+  <mat-icon svgIcon="socket" aria-hidden="false"></mat-icon>
+</button>
+
+<mat-icon
+  [ngClass]="{
+    'more-button': true,
+    'green-icon': socketState.socketConnected,
+    'red-icon': !socketState.socketConnected
+  }"
+  >lens</mat-icon
+>

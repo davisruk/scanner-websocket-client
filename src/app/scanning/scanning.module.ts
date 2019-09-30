@@ -17,7 +17,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 @NgModule({
   declarations: [
     ScannerPageComponent,
@@ -36,8 +39,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatMenuModule,
     MatSnackBarModule,
     MatTooltipModule,
+    MatInputModule,
     CommonModule,
     HttpClientModule,
+    FlexLayoutModule,
     StoreModule.forFeature(fromScanner.scannerFeatureKey, fromScanner.reducer),
     EffectsModule.forFeature([ScannerEffects])
   ]

@@ -34,14 +34,18 @@ export class ScannerPageComponent implements OnInit {
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
   ) {
-    iconRegistry.addSvgIcon(
+    this.iconRegistry.addSvgIcon(
       'barcode-scan',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/barcode-scan.svg')
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/img/barcode-scan.svg'
+      )
     );
 
-    iconRegistry.addSvgIcon(
+    this.iconRegistry.addSvgIcon(
       'socket',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/power-socket-uk.svg')
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/img/power-socket-uk.svg'
+      )
     );
   }
 

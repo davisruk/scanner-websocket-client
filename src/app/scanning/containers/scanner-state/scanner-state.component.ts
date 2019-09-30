@@ -10,7 +10,6 @@ export class ScannerStateComponent implements OnInit {
   @Input() scannerState: ScannerState;
   @Input() socketConnected: boolean;
   @Output() connectScanner = new EventEmitter();
-
   constructor() {}
 
   ngOnInit() {}
