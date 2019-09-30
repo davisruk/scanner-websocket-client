@@ -56,8 +56,6 @@ export class ScannerPageComponent implements OnInit {
     );
   }
 
-  ngOnDestroy(): void {}
-
   connectSocket() {
     this.store.dispatch(new ConnectSocket());
     this.socketState$
