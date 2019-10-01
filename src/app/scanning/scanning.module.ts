@@ -20,12 +20,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { XMLBeautifyPipe } from './pipes/xml-beautify-pipe';
 
 @NgModule({
   declarations: [
     ScannerPageComponent,
     SocketStateComponent,
-    ScannerStateComponent
+    ScannerStateComponent,
+    XMLBeautifyPipe
   ],
   exports: [ScannerPageComponent],
   providers: [ScannerWebSocketService],

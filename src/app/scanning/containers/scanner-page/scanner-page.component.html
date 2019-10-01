@@ -5,8 +5,8 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content fxLayout="column" class="dashboard-card-content">
-    <textarea disabled class="scan-data-area" matInput>{{
-      (scannerState$ | async).dataMessage
+    <textarea readonly class="scan-data-area" matInput>{{
+      (scannerState$ | async).dataMessage | xmlPrettify
     }}</textarea>
   </mat-card-content>
   <mat-card-footer>
