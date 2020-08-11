@@ -1,24 +1,22 @@
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer
-} from '@ngrx/store';
-import { environment } from '../../../environments/environment';
-import * as fromApp from './app.reducer';
+import { MetaReducer, combineReducers, Action } from "@ngrx/store";
+import { environment } from "../../../environments/environment";
+import * as fromApp from "./app.reducer";
 
 export interface State {
   [fromApp.appFeatureKey]: fromApp.State;
 }
 
-const initialState: State = {
-  [fromApp.appFeatureKey]: fromApp.initialState
-};
-
+/*
 export const reducers: ActionReducerMap<State> = {
   [fromApp.appFeatureKey]: fromApp.reducer
 };
+*/
+
+export function reducers(state: State | undefined, action: Action) {
+  return combineReducers({
+    [fromApp.appFeatureKey]: fromApp.reducer,
+  })(state, action);
+}
 
 export const metaReducers: MetaReducer<State>[] = !environment.production
   ? []
