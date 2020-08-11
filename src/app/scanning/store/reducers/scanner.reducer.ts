@@ -1,8 +1,7 @@
-import { ScannerState } from './scanner.reducer';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ScannerActions, ScannerActionTypes } from '../actions/scanner.actions';
+import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { ScannerActions, ScannerActionTypes } from "../actions/scanner.actions";
 
-export const scannerFeatureKey = 'scanningState';
+export const scannerFeatureKey = "scanningState";
 
 export interface SocketState {
   socketStatusMessage: string;
@@ -10,7 +9,7 @@ export interface SocketState {
 }
 
 const initialSocketState: SocketState = {
-  socketStatusMessage: '[SOCK] Disconnected',
+  socketStatusMessage: "[SOCK] Disconnected",
   socketConnected: false
 };
 
@@ -24,8 +23,8 @@ export interface ScannerState {
 const initialScannerState: ScannerState = {
   attemptingConnection: false,
   connected: false,
-  statusMessage: '[SCANNER] Status Unknown',
-  dataMessage: ''
+  statusMessage: "[SCANNER] Status Unknown",
+  dataMessage: ""
 };
 
 export interface State {
@@ -39,7 +38,7 @@ const initialState: State = {
 };
 
 export const selectScanningState = createFeatureSelector<State>(
-  'scanningState'
+  "scanningState"
 );
 export const selectSocketState = createSelector(
   selectScanningState,
