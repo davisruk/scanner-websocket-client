@@ -1,22 +1,22 @@
-import { ScannerState } from './../reducers/scanner.reducer';
-import { Action } from '@ngrx/store';
+import { ScannerState } from "./../reducers/scanner.reducer";
+import { Action } from "@ngrx/store";
 
 export enum ScannerActionTypes {
-  ConnectSocket = '[Scanner] Connect Socket',
-  ConnectSocketSuccess = '[Scanner] Connect Socket Success',
-  DisconnectSocket = '[Scanner] Disonnect Socket',
-  StartScannerEventListener = '[Scanner] Scanner Event Listen',
-  ScannerEventListenerNotification = '[Scanner] Scanner Event Notification',
-  ReconnectScanner = '[Scanner] Reconnect Scanner',
-  ScannerStatusQuery = '[Scanner] Scanner Status Query'
+  ConnectSocket = "[Scanner] Connect Socket",
+  ConnectSocketResult = "[Scanner] Connect Socket Result",
+  DisconnectSocket = "[Scanner] Disonnect Socket",
+  StartScannerEventListener = "[Scanner] Scanner Event Listen",
+  ScannerEventListenerNotification = "[Scanner] Scanner Event Notification",
+  ReconnectScanner = "[Scanner] Reconnect Scanner",
+  ScannerStatusQuery = "[Scanner] Scanner Status Query",
 }
 
 export class ConnectSocket implements Action {
   readonly type = ScannerActionTypes.ConnectSocket;
 }
 
-export class ConnectSocketSuccess implements Action {
-  readonly type = ScannerActionTypes.ConnectSocketSuccess;
+export class ConnectSocketResult implements Action {
+  readonly type = ScannerActionTypes.ConnectSocketResult;
   constructor(public payload: ConnectSocketResultPayload) {}
 }
 
@@ -55,6 +55,6 @@ export type ScannerActions =
   | ReconnectScanner
   | DisconnectSocket
   | ScannerStatusQuery
-  | ConnectSocketSuccess
+  | ConnectSocketResult
   | StartScannerEventListener
   | ScannerEventListenerNotification;

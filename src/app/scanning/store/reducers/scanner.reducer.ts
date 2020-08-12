@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { ScannerActions, ScannerActionTypes } from "../actions/scanner.actions";
+import { SocketReturnTypes } from "../../services/socket-types";
 
 export const scannerFeatureKey = "scanningState";
 
@@ -9,8 +10,8 @@ export interface SocketState {
 }
 
 const initialSocketState: SocketState = {
-  socketStatusMessage: "[SOCK] Disconnected",
-  socketConnected: false
+  socketStatusMessage: SocketReturnTypes.SocketDisconnected,
+  socketConnected: false,
 };
 
 export interface ScannerState {
@@ -24,7 +25,7 @@ const initialScannerState: ScannerState = {
   attemptingConnection: false,
   connected: false,
   statusMessage: "[SCANNER] Status Unknown",
-  dataMessage: ""
+  dataMessage: "",
 };
 
 export interface State {
@@ -34,7 +35,7 @@ export interface State {
 
 const initialState: State = {
   socket: initialSocketState,
-  scanner: initialScannerState
+  scanner: initialScannerState,
 };
 
 export const selectScanningState = createFeatureSelector<State>(
@@ -42,41 +43,41 @@ export const selectScanningState = createFeatureSelector<State>(
 );
 export const selectSocketState = createSelector(
   selectScanningState,
-  state => state.socket
+  (state) => state.socket
 );
 export const selectScannerState = createSelector(
   selectScanningState,
-  state => state.scanner
+  (state) => state.scanner
 );
 export const selectScannerStatusMessage = createSelector(
   selectScannerState,
-  state => state.statusMessage
+  (state) => state.statusMessage
 );
 
 export function reducer(state = initialState, action: ScannerActions): State {
   switch (action.type) {
-    case ScannerActionTypes.ConnectSocketSuccess: {
+    case ScannerActionTypes.ConnectSocketResult: {
       if (!action.payload.connected) {
         return {
           scanner: initialScannerState,
           socket: {
             socketConnected: action.payload.connected,
-            socketStatusMessage: action.payload.message
-          }
+            socketStatusMessage: action.payload.message,
+          },
         };
       }
       return {
         ...state,
         socket: {
           socketConnected: action.payload.connected,
-          socketStatusMessage: action.payload.message
-        }
+          socketStatusMessage: action.payload.message,
+        },
       };
     }
     case ScannerActionTypes.ScannerEventListenerNotification: {
       return {
         ...state,
-        scanner: action.payload.status
+        scanner: action.payload.status,
       };
     }
 

@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap } from 'rxjs/operators';
-import * as fromScannerActions from '../actions/scanner.actions';
-import { ScannerWebSocketService } from '../../services/scanner-web-socket/scanner-web-socket.service';
-import { of, EMPTY } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Actions, Effect, ofType } from "@ngrx/effects";
+import { switchMap } from "rxjs/operators";
+import * as fromScannerActions from "../actions/scanner.actions";
+import { ScannerWebSocketService } from "../../services/scanner-web-socket/scanner-web-socket.service";
+import { SocketReturnTypes } from "../../services/socket-types";
+import { of, EMPTY } from "rxjs";
 
 @Injectable()
 export class ScannerEffects {
@@ -16,11 +17,11 @@ export class ScannerEffects {
   connectSocket$ = this.actions$.pipe(
     ofType(fromScannerActions.ScannerActionTypes.ConnectSocket),
     switchMap(() => this.scannerService._connectSocket()),
-    switchMap(result => {
+    switchMap((result) => {
       return of(
-        new fromScannerActions.ConnectSocketSuccess({
-          connected: true,
-          message: result
+        new fromScannerActions.ConnectSocketResult({
+          connected: result === SocketReturnTypes.ConnectSocketSuccess,
+          message: result,
         })
       );
     })
@@ -57,11 +58,11 @@ export class ScannerEffects {
   scannerDisconnect$ = this.actions$.pipe(
     ofType(fromScannerActions.ScannerActionTypes.DisconnectSocket),
     switchMap(() => this.scannerService._disconnectSocket()),
-    switchMap(result => {
+    switchMap((result) => {
       return of(
-        new fromScannerActions.ConnectSocketSuccess({
+        new fromScannerActions.ConnectSocketResult({
           connected: false,
-          message: result
+          message: result,
         })
       );
     })

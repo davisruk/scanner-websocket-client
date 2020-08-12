@@ -1,18 +1,19 @@
-import { ScannerState } from './../../store/reducers/scanner.reducer';
-import { Subject, Observable, of } from 'rxjs';
-import { Injectable } from '@angular/core';
-import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client';
-import { Store } from '@ngrx/store';
-import { State } from '../../store/reducers/scanner.reducer';
-import { ScannerEventListenerNotification } from '../../store/actions/scanner.actions';
+import { ScannerState } from "./../../store/reducers/scanner.reducer";
+import { Subject, Observable, of } from "rxjs";
+import { Injectable } from "@angular/core";
+import * as Stomp from "stompjs";
+import * as SockJS from "sockjs-client";
+import { Store } from "@ngrx/store";
+import { State } from "../../store/reducers/scanner.reducer";
+import { ScannerEventListenerNotification } from "../../store/actions/scanner.actions";
+import { SocketReturnTypes } from "../../services/socket-types";
 
 @Injectable()
 export class ScannerWebSocketService {
   constructor(private store: Store<State>) {}
 
-  webSocketEndPoint = 'http://localhost:8080/ws';
-  topic = '/topic/com';
+  webSocketEndPoint = "http://localhost:8080/ws";
+  topic = "/topic/com";
   stompClient: any;
 
   _connectSocket(): Observable<string> {
@@ -21,8 +22,8 @@ export class ScannerWebSocketService {
     const connectResult = new Subject<string>();
     this.stompClient.connect(
       {},
-      (_: any) => connectResult.next('[SOCK] Successfully Connected'),
-      (_: any) => connectResult.next('[SOCK] Connect Error')
+      (_: any) => connectResult.next(SocketReturnTypes.ConnectSocketSuccess),
+      (_: any) => connectResult.next(SocketReturnTypes.ConnectSocketError)
     );
     return connectResult.asObservable();
   }
@@ -38,14 +39,14 @@ export class ScannerWebSocketService {
     if (this.stompClient !== null) {
       this.stompClient.disconnect();
     }
-    return of('[SOCK] Disconnected');
+    return of(SocketReturnTypes.SocketDisconnected);
   }
 
   _sendReconnectScanner() {
-    this.stompClient.send('/app/reconnectScanner', {});
+    this.stompClient.send("/app/reconnectScanner", {});
   }
 
   _sendScannerStatusQuery() {
-    this.stompClient.send('/app/scannerStatus', {});
+    this.stompClient.send("/app/scannerStatus", {});
   }
 }
